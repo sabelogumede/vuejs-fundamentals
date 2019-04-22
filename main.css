@@ -138,6 +138,7 @@ li input {
 
 .strikeout:hover {
     color: #8795A1;
+    /* color: rgb(245, 34, 6); */
 }
 
 .priority {
