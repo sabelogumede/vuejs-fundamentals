@@ -1,4 +1,4 @@
-#Vue.js Fundamentals
+# Vue.js Fundamentals
 * v-for (loops)
 * user inputs & Vue Devtools ( v-model "v bind - two way" )
 * User Events (v-on:click / @click )
