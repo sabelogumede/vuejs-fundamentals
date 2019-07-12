@@ -3,85 +3,99 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Shopping List App</title>
+        <title>Shopping List App two</title>
         <link rel="stylesheet" href="main.css">
     </head>
     <body>
         <div id="shopping-list">
-            <div class="header">
+            <div>
                 <h1>{{ header.toLocaleUpperCase() }}</h1>
+                <!--Action buttons -->
                 <button v-if="state === 'default'" class="btn btn-primary" @click="changeState('edit')">Add Item</button>
-                <button v-else class="btn btn-cancel" @click="changeState('default')">Cancel</button>
+                <button v-else="v-else" class="btn btn-cancel" @click="changeState('default')">Cancel</button>
             </div>
+
+            <!--Input area -->
             <div v-if="state === 'edit'" class="add-item-form">
-                <input v-model="newItem" type="text" placeholder="Add an item" @keyup.enter="saveItem">
-                <!-- <p>{{ characterCount }}/20</p> -->
+                <input v-model="newItem" types="text" placeholder="Add an Item" @keyup.enter="saveItem">
+                <!-- computed character count-->
+                <p>{{ characterCount }}/200</p>
                 <button class="btn btn-primary" :disabled="newItem.length === 0" @click="saveItem">Save Item</button>
             </div>
-            
+
+            <!-- <a v-bind:href="newItem" target="_blank">Dynamic Link</a> -->
+
+            <!-- List of input items -->
             <ul>
-                <li v-for="item in reversedItems" :class="{strikeout: item.purchased}" @click="togglePurchased(item)">{{ item.label }}</li>
-                <!-- ways of adding "piority" class to all items-->
-                <!-- <li v-for="item in items" :class="[item.purchased ? 'strikeout' : '', item.highPriority ? 'priority' : '']" @click="togglePurchased(item)">{{ item.label }}</li>-->
-                <!--<li v-for="item in items" :class="[item.purchased ? 'strikeout' : '', 'priority']" @click="togglePurchased(item)">{{ item.label }}</li> -->
-                <!-- <li v-for="item in items" class="priority" :class="[item.purchased ? 'strikeout' : '']" @click="togglePurchased(item)">{{ item.label }}</li> -->
+                <!-- Dynamic Class Binding -->
+                <!-- use methods to dynamic update item purchased -->
+                <!-- changed our items in v-for to the new reversed items list = reversedItems" from our computed properties-->
+                <li v-for="item in items" :class="{strikeout: item.purchased}" @click="togglePurchased(item)">{{item.label }}</li>
+                <!-- <li v-for="item in items" :class="[item.purchased ? 'strikeout' : '', item.highPriority ? 'priority' : '' ]">{{item.label }}</li> -->
             </ul>
-            <p v-if="items.length === 0">Nice job!... add new items.</p>
+            <!-- No input items message -->
+            <p v-if="items.length === 0">Nice Job! You've bought all your Items.</p>
         </div>
 
+        <!--vue cdn -->
         <script src="https://unpkg.com/vue"></script>
         <script>
             var shoppingList = new Vue({
                 el: '#shopping-list',
                 data: {
                     state: 'default',
-                    header: 'shopping list app',
+                    header: 'Shopping List App',
                     newItem: '',
                     items: [
                         {
                             label: '10 party hats',
                             purchased: false,
-                            highPriority: false,
-                        },
-                        {
+                            highPriority: false
+                        }, {
                             label: '2 board games',
                             purchased: true,
-                            highPriority: false,
-                        },
-                        {
+                            highPriority: false
+                        }, {
                             label: '20 cups',
                             purchased: false,
-                            highPriority: true,
-                        }
+                            highPriority: true
+                        },
+                        // '10 party hats', '2 board games', '20 cups' #}
                     ]
                 },
                 computed: {
-                reversedItems() {
-                     return this.items.slice(0).reverse();
+                    reversedItems() {
+                        return this
+                            .items
+                            .slice(0)
+                            .reverse();
                     },
-                    /* characterCount() {
-                     return this.newItem.length;
-                    } */
+                    characterCount() {
+                        return this.newItem.length;
+                    }
                 },
                 methods: {
-                    saveItem: function() {
-                        this.items.push({
-                            label: this.newItem,
-                            purchased: false,
-                            //highPriority: false,
+                    saveItem: function () {
+                        this
+                            .items
+                            .push({
+                                label: this.newItem,
+                                purchased: false
                             },);
+                        //clear out our newItem to empty string
                         this.newItem = '';
                     },
-                    changeState: function(newState) {
+                    changeState: function (newState) {
                         this.state = newState;
-
-                        this.newItem = '';
+                        //clear out our newstate to empty string
+                        this.newState = ''
                     },
-                    togglePurchased: function(item) {
-                        item.purchased = !item.purchased;
+                    togglePurchased: function (item) {
+                        //undate the item directly
+                        item.purchased = !item.purchased
                     }
                 }
             });
         </script>
     </body>
-</html> 
+</html>
